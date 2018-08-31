@@ -15,7 +15,7 @@ before_script:
   - rm -rf RawTherapee/ci
   - cp -a ci RawTherapee
   - cd RawTherapee
-  - bash ci/check_commit.sh ${RT_BRANCH}
+  - bash ci/check_commit.sh "continuous" ${RT_BRANCH}
   #- 'if [ -e travis.cancel ]; then
   #      exit 0;
   #  fi'
