@@ -2,6 +2,7 @@
 (mkdir -p /work/w64-build && cd /work/w64-build) || exit 1
 echo "Compiling RawTherapee"
 ls /sources
+(cd /sources; patch -p0 < ci/rtgui-options-headers.patch; patch -p0 < ci/rtgui-placesbrowser-headers.patch)
 (crossroad cmake -DCMAKE_BUILD_TYPE=Release -DPROC_TARGET_NUMBER=1 \
  -DCACHE_NAME_SUFFIX="'5-dev'" \
  -DCMAKE_C_FLAGS="'-mwin32 -m64 -mthreads -msse2'" \
