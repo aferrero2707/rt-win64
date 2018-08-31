@@ -12,3 +12,25 @@ ls /sources
  -DCMAKE_EXE_LINKER_FLAGS="'-m64 -mthreads -static-libgcc'" \
  -DCMAKE_EXE_LINKER_FLAGS_RELEASE="'-s -O3'" \
  /sources && make -j 2 && make install) || (rm -f /work/w64-build/Release/rawtherapee.exe && exit 1)
+
+echo ""
+echo "########################################################################"
+echo ""
+echo "Install Hicolor and Adwaita icon themes"
+
+(cd /work/w64-build && rm -rf hicolor-icon-theme-0.* && \
+wget http://icon-theme.freedesktop.org/releases/hicolor-icon-theme-0.17.tar.xz && \
+tar xJf hicolor-icon-theme-0.17.tar.xz && cd hicolor-icon-theme-0.17 && \
+./configure --prefix=/zyx && make install && rm -rf hicolor-icon-theme-0.*) || exit 1
+echo "icons after hicolor installation:"
+ls /zyx/share/icons
+echo ""
+
+(cd /work/w64-build && rm -rf adwaita-icon-theme-3.* && \
+wget http://ftp.gnome.org/pub/gnome/sources/adwaita-icon-theme/3.26/adwaita-icon-theme-3.26.0.tar.xz && \
+tar xJf adwaita-icon-theme-3.26.0.tar.xz && cd adwaita-icon-theme-3.26.0 && \
+./configure --prefix=/zyx && make install && rm -rf adwaita-icon-theme-3.26.0*) || exit 1
+echo "icons after adwaita installation:"
+ls /zyx/share/icons
+echo ""
+
