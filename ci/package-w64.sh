@@ -24,7 +24,7 @@ mkdir -p /work/w64-build && cd /work/w64-build
 
 crossroad w64 w64-build --run=$TRAVIS_BUILD_DIR/ci/build-w64.sh
 
-ls /work/w64-build/Release/rawtherapee.exe || exit 1
+if [ ! -e /work/w64-build/Release/rawtherapee.exe ]; then exit 1; fi
 
 bundle_package=rawtherapee
 bundle_version="w64-$(date +%Y%m%d)_$(date +%H%M)-git-${TRAVIS_BRANCH}"
@@ -43,7 +43,7 @@ installdir=$HOME/.local/share/crossroad/roads/w64/w64-build
 
 mingw_prefix=x86_64-w64-mingw32-
 
-$repackagedir=$TRAVIS_BUILD_DIR/$bundle_package-$bundle_version
+#repackagedir=$TRAVIS_BUILD_DIR/$bundle_package-$bundle_version
 repackagedir=/work/$bundle_package-$bundle_version
 
 echo "Contents of \"$installdir/bin\":"
