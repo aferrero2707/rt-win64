@@ -141,6 +141,11 @@ echo "Contents of $repackagedir/share/icons:"
 ls $repackagedir/share/icons
 echo "==================="
 
+
+# Cleanup
+rm -rf $repackagedir/etc
+rm -f $repackagedir/icu*.dll $repackagedir/libgdkmm-2.4*.dll $repackagedir/libgfortran-*.dll $repackagedir/libgtkmm-2.4*.dll $repackagedir/libvips-*.dll
+
 #exit
 
 #echo creating $bundle_package-$bundle_version.zip
