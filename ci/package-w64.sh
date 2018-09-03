@@ -20,11 +20,19 @@ transfer()
 
 /usr/bin/x86_64-w64-mingw32-gcc -v
 
+# unzip to here
+export installdir=$HOME/.local/share/crossroad/roads/w64/w64-build
+
+export RT_PREFIX=RelWithDebInfo
+
 mkdir -p /work/w64-build && cd /work/w64-build
-
+rm -f /work/w64-build/${RT_PREFIX}/rawtherapee.exe
 crossroad w64 w64-build --run=$TRAVIS_BUILD_DIR/ci/build-w64.sh
+if [ ! -e /work/w64-build/${RT_PREFIX}/rawtherapee.exe ]; then exit 1; fi
 
-if [ ! -e /work/w64-build/Release/rawtherapee.exe ]; then exit 1; fi
+echo "crossroad install gdk-pixbuf-query-loaders" > /work/dep-install2.sh
+crossroad w64 w64-build --run=/work/dep-install2.sh
+#exit 0
 
 bundle_package=rawtherapee
 bundle_version="w64-$(date +%Y%m%d)_$(date +%H%M)-git-${TRAVIS_BRANCH}"
@@ -34,9 +42,6 @@ basedir=`pwd`
  
 # download zips to here
 packagedir=packages
-
-# unzip to here
-installdir=$HOME/.local/share/crossroad/roads/w64/w64-build
 
 # jhbuild will download sources to here 
 #checkoutdir=source
@@ -58,7 +63,7 @@ rm -rf $repackagedir/bin
 rm -rf $repackagedir/wine
 mkdir $repackagedir/bin
 (cp -L $installdir/bin/* $repackagedir/bin) || exit 1
-(cp -a /work/w64-build/Release/* $repackagedir) || exit 1
+(cp -a /work/w64-build/${RT_PREFIX}/* $repackagedir) || exit 1
 (cp -L $installdir/lib/*.dll $repackagedir/) || exit 1
 (cp -L $installdir/bin/*.dll $repackagedir/) || exit 1
 echo "================="; echo ""
@@ -75,7 +80,7 @@ echo "cleaning build \"$repackagedir\""
 if [ ! -e $repackagedir/bin ]; then echo "$repackagedir/bin not found."; exit; fi
 if [ ! -e $repackagedir/lib ]; then echo "$repackagedir/lib not found."; exit; fi
 
-#(cd $repackagedir/bin; wget ftp://ftp.equation.com/gdb/64/gdb.exe)
+wget ftp://ftp.equation.com/gdb/64/gdb.exe -O $repackagedir/gdb.exe
 
 echo "Before cleaning $repackagedir/bin"
 pwd
@@ -112,9 +117,6 @@ mingwlibdir=/usr/x86_64-w64-mingw32/lib
 cp -L $gccmingwlibdir/*/*.dll $repackagedir/
 cp -L $mingwlibdir/*.dll $repackagedir/
 
-#wine $repackagedir/bin/gdk-pixbuf-query-loaders.exe | sed -e "s%Z:$(pwd)/$repackagedir%..%g" > $repackagedir/lib/gdk-pixbuf-2.0/2.10.0/loaders.cache
-#cat $repackagedir/lib/gdk-pixbuf-2.0/2.10.0/loaders.cache
-
 #rm -rf $repackagedir/share/mime
 #cp -a /usr/share/mime $repackagedir/share/mime
 #rm $repackagedir/share/mime/application/vnd.ms-*
@@ -142,6 +144,9 @@ ls $repackagedir/share/icons
 echo "==================="
 
 
+wine $HOME/.local/share/crossroad/roads/w64/w64-build/bin/gdk-pixbuf-query-loaders.exe | sed -e "s%Z:/root/.local/share/crossroad/roads/w64/w64-build/%%g" > $repackagedir/lib/gdk-pixbuf-2.0/2.10.0/loaders.cache
+cat $repackagedir/lib/gdk-pixbuf-2.0/2.10.0/loaders.cache
+
 # Cleanup
 rm -rf $repackagedir/etc
 rm -f $repackagedir/icu*.dll $repackagedir/libgdkmm-2.4*.dll $repackagedir/libgfortran-*.dll $repackagedir/libgtkmm-2.4*.dll $repackagedir/libvips-*.dll
@@ -154,7 +159,7 @@ rm -f $repackagedir/icu*.dll $repackagedir/libgdkmm-2.4*.dll $repackagedir/libgf
 
 rm -f $TRAVIS_BUILD_DIR/$bundle_package-$bundle_version.zip
 cd $repackagedir/../
-zip -r $TRAVIS_BUILD_DIR/$bundle_package-$bundle_version.zip $bundle_package-$bundle_version
+zip -q -r $TRAVIS_BUILD_DIR/$bundle_package-$bundle_version.zip $bundle_package-$bundle_version
 
 transfer $TRAVIS_BUILD_DIR/$bundle_package-$bundle_version.zip
 
