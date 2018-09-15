@@ -160,8 +160,15 @@ rm -f $repackagedir/icu*.dll $repackagedir/libgdkmm-2.4*.dll $repackagedir/libgf
 rm -f $TRAVIS_BUILD_DIR/$bundle_package-$bundle_version.zip
 cd $repackagedir/../
 zip -q -r $TRAVIS_BUILD_DIR/$bundle_package-$bundle_version.zip $bundle_package-$bundle_version
+#transfer $TRAVIS_BUILD_DIR/$bundle_package-$bundle_version.zip
 
-transfer $TRAVIS_BUILD_DIR/$bundle_package-$bundle_version.zip
+
+cp -a $HOME/.local/share/crossroad/roads/w64/w64-build/bin/gspawn-win64-helper* "$repackagedir"
+cat /work/w64-build/rtdata/WindowsInnoSetup.iss | sed -e "s|/work/w64-build/${RT_PREFIX}|$repackagedir|g" > /work/WindowsInnoSetup.iss
+cat /work/WindowsInnoSetup.iss
+cd /
+wine ~/.wine/drive_c/Program\ Files\ \(x86\)/Inno\ Setup\ 5/ISCC.exe - < /work/WindowsInnoSetup.iss
+cp "$repackagedir/.."/RawTherapee_*.exe "$TRAVIS_BUILD_DIR"
 
 exit
 

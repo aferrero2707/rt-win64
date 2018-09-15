@@ -1,0 +1,36 @@
+*** UpdateInfo.cmake	Wed Sep  5 16:07:47 2018
+--- UpdateInfo.cmake.new	Wed Sep  5 16:08:19 2018
+***************
+*** 84,90 ****
+      include("${PROJECT_SOURCE_DIR}/ReleaseInfo.cmake")
+  endif (REL_INFO_FILE STREQUAL REL_INFO_FILE-NOTFOUND)
+  
+! if (WIN32)
+      if (BIT_DEPTH EQUAL 4)
+          set(BUILD_BIT_DEPTH 32)
+          # 32 bits builds has to be installable on 64 bits system, to support WinXP/64.
+--- 84,90 ----
+      include("${PROJECT_SOURCE_DIR}/ReleaseInfo.cmake")
+  endif (REL_INFO_FILE STREQUAL REL_INFO_FILE-NOTFOUND)
+  
+! #if (WIN32)
+      if (BIT_DEPTH EQUAL 4)
+          set(BUILD_BIT_DEPTH 32)
+          # 32 bits builds has to be installable on 64 bits system, to support WinXP/64.
+***************
+*** 103,109 ****
+  
+      configure_file ("${PROJECT_SOURCE_DIR}/tools/win/InnoSetup/WindowsInnoSetup.iss.in" "${CMAKE_BINARY_DIR}/rtdata/WindowsInnoSetup.iss")
+      message(STATUS "Created ${CMAKE_BINARY_DIR}/rtdata/WindowsInnoSetup.iss")
+! endif (WIN32)
+  
+  # build version.h from template
+  configure_file ("${PROJECT_SOURCE_DIR}/rtgui/version.h.in" "${CMAKE_BINARY_DIR}/rtgui/version.h")
+--- 103,109 ----
+  
+      configure_file ("${PROJECT_SOURCE_DIR}/tools/win/InnoSetup/WindowsInnoSetup.iss.in" "${CMAKE_BINARY_DIR}/rtdata/WindowsInnoSetup.iss")
+      message(STATUS "Created ${CMAKE_BINARY_DIR}/rtdata/WindowsInnoSetup.iss")
+! #endif (WIN32)
+  
+  # build version.h from template
+  configure_file ("${PROJECT_SOURCE_DIR}/rtgui/version.h.in" "${CMAKE_BINARY_DIR}/rtgui/version.h")
