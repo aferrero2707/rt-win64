@@ -164,7 +164,8 @@ zip -q -r $TRAVIS_BUILD_DIR/$bundle_package-$bundle_version.zip $bundle_package-
 
 
 cp -a $HOME/.local/share/crossroad/roads/w64/w64-build/bin/gspawn-win64-helper* "$repackagedir"
-cat /work/w64-build/rtdata/WindowsInnoSetup.iss | sed -e "s|/work/w64-build/${RT_PREFIX}|$repackagedir|g" > /work/WindowsInnoSetup.iss
+RT_VERSION=$(cat  /work/w64-build/rtdata/WindowsInnoSetup.iss | grep " MyAppVersion " | grep define | cut -d "\"" -f 2)
+cat /work/w64-build/rtdata/WindowsInnoSetup.iss | sed -e "s|/work/w64-build/${RT_PREFIX}|$repackagedir|g" | sed -e "s|\"${RT_VERSION}\"|\"${TRAVIS_BRANCH}-${RT_VERSION}\"|g" > /work/WindowsInnoSetup.iss
 cat /work/WindowsInnoSetup.iss
 cd /
 wine ~/.wine/drive_c/Program\ Files\ \(x86\)/Inno\ Setup\ 5/ISCC.exe - < /work/WindowsInnoSetup.iss

@@ -6,9 +6,9 @@ sudo: required
 services: docker
 env: 
   - RT_BRANCH=dev
-  - RT_BRANCH=newlocallab
-  - RT_BRANCH=waveletnew
-  - RT_BRANCH=releases
+  #- RT_BRANCH=newlocallab
+  #- RT_BRANCH=waveletnew
+  #- RT_BRANCH=releases
 
 before_script:
   - git clone https://github.com/Beep6581/RawTherapee.git --branch $RT_BRANCH --single-branch
