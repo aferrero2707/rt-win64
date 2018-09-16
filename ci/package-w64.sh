@@ -34,8 +34,16 @@ echo "crossroad install gdk-pixbuf-query-loaders" > /work/dep-install2.sh
 crossroad w64 w64-build --run=/work/dep-install2.sh
 #exit 0
 
-bundle_package=rawtherapee
-bundle_version="w64-$(date +%Y%m%d)_$(date +%H%M)-git-${TRAVIS_BRANCH}"
+bundle_package=RawTherapee
+#bundle_version="w64-$(date +%Y%m%d)_$(date +%H%M)-git-${TRAVIS_BRANCH}"
+RT_VERSION=$(cat  /work/w64-build/rtdata/WindowsInnoSetup.iss | grep " MyAppVersion " | grep define | cut -d "\"" -f 2)
+bundle_version="${TRAVIS_BRANCH}-${RT_VERSION}"
+#repackagedir=$TRAVIS_BUILD_DIR/$bundle_package-$bundle_version
+repackagedir=/work/$bundle_package-$bundle_version
+cat /work/w64-build/rtdata/WindowsInnoSetup.iss | sed -e "s|/work/w64-build/${RT_PREFIX}|$repackagedir|g" | sed -e "s|\"${RT_VERSION}\"|\"${bundle_version}\"|g" > /work/WindowsInnoSetup.iss
+cat /work/WindowsInnoSetup.iss
+
+
 
 # stuff is in here
 basedir=`pwd`
@@ -47,9 +55,6 @@ packagedir=packages
 #checkoutdir=source
 
 mingw_prefix=x86_64-w64-mingw32-
-
-#repackagedir=$TRAVIS_BUILD_DIR/$bundle_package-$bundle_version
-repackagedir=/work/$bundle_package-$bundle_version
 
 echo "Contents of \"$installdir/bin\":"
 ls -l $installdir/bin
@@ -81,6 +86,8 @@ if [ ! -e $repackagedir/bin ]; then echo "$repackagedir/bin not found."; exit; f
 if [ ! -e $repackagedir/lib ]; then echo "$repackagedir/lib not found."; exit; fi
 
 wget ftp://ftp.equation.com/gdb/64/gdb.exe -O $repackagedir/gdb.exe
+
+cp -a $HOME/.local/share/crossroad/roads/w64/w64-build/bin/gspawn-win64-helper* "$repackagedir"
 
 echo "Before cleaning $repackagedir/bin"
 pwd
@@ -150,6 +157,15 @@ cat $repackagedir/lib/gdk-pixbuf-2.0/2.10.0/loaders.cache
 # Cleanup
 rm -rf $repackagedir/etc
 rm -f $repackagedir/icu*.dll $repackagedir/libgdkmm-2.4*.dll $repackagedir/libgfortran-*.dll $repackagedir/libgtkmm-2.4*.dll $repackagedir/libvips-*.dll
+rm -rf "$repackagedir/share/icons/Adwaita"/scalable*
+rm -rf "$repackagedir/lib/gtk-2.0"
+for dir in GConf bash-completion devhelp fontconfig gettext gtk-3.0 icu "lensfun/version_1" locale man pkgconfig themes; do
+  rm -rf "$repackagedir/share/$dir"
+done
+
+# Remove debugging symbols from AppImage binaries and libraries
+find "${repackagedir}" -type f -regex '.*\.dll' -print0 | xargs -0 --no-run-if-empty --verbose -n1 strip
+
 
 #exit
 
@@ -157,16 +173,12 @@ rm -f $repackagedir/icu*.dll $repackagedir/libgdkmm-2.4*.dll $repackagedir/libgf
 #rm -f $bundle_package-$bundle_version.zip
 #zip -r -qq $bundle_package-$bundle_version.zip $bundle_package-$bundle_version
 
-rm -f $TRAVIS_BUILD_DIR/$bundle_package-$bundle_version.zip
+rm -f $TRAVIS_BUILD_DIR/${bundle_package}_${bundle_version}.zip
 cd $repackagedir/../
-zip -q -r $TRAVIS_BUILD_DIR/$bundle_package-$bundle_version.zip $bundle_package-$bundle_version
+zip -q -r $TRAVIS_BUILD_DIR/${bundle_package}_${bundle_version}.zip $bundle_package-$bundle_version
 #transfer $TRAVIS_BUILD_DIR/$bundle_package-$bundle_version.zip
 
 
-cp -a $HOME/.local/share/crossroad/roads/w64/w64-build/bin/gspawn-win64-helper* "$repackagedir"
-RT_VERSION=$(cat  /work/w64-build/rtdata/WindowsInnoSetup.iss | grep " MyAppVersion " | grep define | cut -d "\"" -f 2)
-cat /work/w64-build/rtdata/WindowsInnoSetup.iss | sed -e "s|/work/w64-build/${RT_PREFIX}|$repackagedir|g" | sed -e "s|\"${RT_VERSION}\"|\"${TRAVIS_BRANCH}-${RT_VERSION}\"|g" > /work/WindowsInnoSetup.iss
-cat /work/WindowsInnoSetup.iss
 cd /
 wine ~/.wine/drive_c/Program\ Files\ \(x86\)/Inno\ Setup\ 5/ISCC.exe - < /work/WindowsInnoSetup.iss
 cp "$repackagedir/.."/RawTherapee_*.exe "$TRAVIS_BUILD_DIR"
