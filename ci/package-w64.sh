@@ -157,7 +157,7 @@ cat $repackagedir/lib/gdk-pixbuf-2.0/2.10.0/loaders.cache
 # Cleanup
 rm -rf $repackagedir/etc
 rm -f $repackagedir/icu*.dll $repackagedir/libgdkmm-2.4*.dll $repackagedir/libgfortran-*.dll $repackagedir/libgtkmm-2.4*.dll $repackagedir/libvips-*.dll
-rm -rf "$repackagedir/share/icons/Adwaita"/scalable*
+#rm -rf "$repackagedir/share/icons/Adwaita"/scalable*
 rm -rf "$repackagedir/lib/gtk-2.0"
 for dir in GConf bash-completion devhelp fontconfig gettext gtk-3.0 icu "lensfun/version_1" locale man pkgconfig themes; do
   rm -rf "$repackagedir/share/$dir"
