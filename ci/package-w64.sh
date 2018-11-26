@@ -180,6 +180,7 @@ zip -q -r $TRAVIS_BUILD_DIR/${bundle_package}_${bundle_version}.zip $bundle_pack
 
 
 cd /
+dpkg --add-architecture i386 && apt-get update -y && apt-get install -y wine32
 wine ~/.wine/drive_c/Program\ Files\ \(x86\)/Inno\ Setup\ 5/ISCC.exe - < /work/WindowsInnoSetup.iss
 cp "$repackagedir/.."/RawTherapee_*.exe "$TRAVIS_BUILD_DIR"
 
