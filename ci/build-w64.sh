@@ -1,7 +1,7 @@
 #! /bin/bash
 echo "Compiling RawTherapee"
 ls /sources
-(cd /sources; patch -N -p0 < ci/rtgui-options-headers.patch; patch -N -p0 < ci/rtgui-pixbuf-env.patch; patch -N -p0 < ci/rtgui-placesbrowser-headers.patch; patch -N -p0 < ci/rt-innosetup.patch)
+(cd /sources; patch -N -p0 < ci/rtgui-options-headers.patch; patch -N -p0 < ci/rtgui-pixbuf-env.patch; patch -N -p0 < ci/rtgui-GTK_CSD-env.patch; patch -N -p0 < ci/rtgui-placesbrowser-headers.patch; patch -N -p0 < ci/rt-innosetup.patch)
 (mkdir -p /work/w64-build && cd /work/w64-build) || exit 1
 (crossroad cmake -DCMAKE_BUILD_TYPE=RelWithDebInfo -DPROC_TARGET_NUMBER=1 \
  -DCACHE_NAME_SUFFIX="'5-dev'" \
