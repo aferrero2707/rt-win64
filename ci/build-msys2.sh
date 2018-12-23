@@ -41,7 +41,7 @@ echo "Compiling RawTherapee"
 ls /sources
 mkdir -p /work/w64-build/rt || exit 1
 cd /work/w64-build/rt || exit 1
-(cd /sources; patch -N -p0 < ci/rtgui-options-headers.patch; patch -N -p0 < ci/rtgui-pixbuf-env.patch; patch -N -p0 < ci/rtgui-GTK_CSD-env.patch; patch -N -p0 < ci/rtgui-placesbrowser-headers.patch; patch -N -p0 < ci/rt-innosetup.patch)
+(cd /sources; sudo patch -N -p0 < ci/rtgui-options-headers.patch; sudo patch -N -p0 < ci/rtgui-pixbuf-env.patch; sudo patch -N -p0 < ci/rtgui-GTK_CSD-env.patch; sudo patch -N -p0 < ci/rtgui-placesbrowser-headers.patch; sudo patch -N -p0 < ci/rt-innosetup.patch)
 #(x86_64-w64-mingw32-cmake \
 (cmake \
  -DCMAKE_TOOLCHAIN_FILE=/etc/Toolchain-mingw-w64-x86_64.cmake \
