@@ -12,7 +12,7 @@ ls /sources
  -DCMAKE_EXE_LINKER_FLAGS="'-m64 -mthreads -static-libgcc'" \
  -DCMAKE_EXE_LINKER_FLAGS_RELEASE="'-s -O3'" \
  -DWIN32=TRUE \
- /sources && make -j 2 && make install) || (rm -f /work/w64-build/Release/rawtherapee.exe && exit 1)
+ /sources && make VERBOSE=1 -j 2 install) || (rm -f /work/w64-build/Release/rawtherapee.exe && exit 1)
 
 echo ""
 echo "########################################################################"
