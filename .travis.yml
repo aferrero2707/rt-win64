@@ -23,13 +23,15 @@ before_script:
   - python support/travis_blocking_stdout.py
   #- travis_wait 120 sleep infinity & sudo docker pull photoflow/docker-trusty-gtk3
   #- sudo docker run -it -v $(pwd):/sources -e "RT_BRANCH=${RT_BRANCH}" photoflow/docker-trusty-gtk3 bash /sources/ci/appimage.sh
-  - travis_wait 120 sleep infinity & sudo docker pull photoflow/docker-buildenv-mingw
-  - sudo docker run -it -e "TRAVIS_BUILD_DIR=/sources" -e "TRAVIS_BRANCH=${RT_BRANCH}" -e "TRAVIS_COMMIT=xxx" -v $(pwd):/sources photoflow/docker-buildenv-mingw bash -c /sources/ci/package-w64.sh
+  #- travis_wait 120 sleep infinity & sudo docker pull photoflow/docker-buildenv-mingw
+  #- sudo docker run -it -e "TRAVIS_BUILD_DIR=/sources" -e "TRAVIS_BRANCH=${RT_BRANCH}" -e "TRAVIS_COMMIT=xxx" -v $(pwd):/sources photoflow/docker-buildenv-mingw bash -c /sources/ci/package-w64.sh
+  - travis_wait 120 sleep infinity & sudo docker pull photoflow/docker-buildenv-mingw-manjaro
+  - sudo docker run -it -e "TRAVIS_BUILD_DIR=/sources" -e "TRAVIS_BRANCH=${RT_BRANCH}" -e "TRAVIS_COMMIT=xxx" -v $(pwd):/sources photoflow/docker-buildenv-mingw-manjaro bash -c /sources/ci/package-msys2.sh
   #- bash ci/appimage2.sh
   - # check if zip file was successfully created
   - # abort job with failure if not
   - ls RawTherapee_*.zip
-  - ls RawTherapee_*.exe
+  #- ls RawTherapee_*.exe
 after_success:
   - cd $TRAVIS_BUILD_DIR/RawTherapee
   - pwd
@@ -41,7 +43,7 @@ after_success:
   #- TRAVIS_REPO_SLUG="Beep6581/RawTherapee" bash  ./upload_rotate.sh "nightly" out/* >& /dev/null
   #- TRAVIS_REPO_SLUG="Beep6581/RawTherapee" bash  ./upload_rotate.sh "nightly" $TRAVIS_BUILD_DIR/RawTherapee/commit-${RT_BRANCH}.hash >& /dev/null
   - bash  ./upload_rotate.sh "continuous" RawTherapee*.zip >& /dev/null
-  - bash  ./upload_rotate.sh "continuous" RawTherapee*.exe >& /dev/null
+  #- bash  ./upload_rotate.sh "continuous" RawTherapee*.exe >& /dev/null
   - bash  ./upload_rotate.sh "continuous" $TRAVIS_BUILD_DIR/RawTherapee/commit-${RT_BRANCH}.hash >& 
 branches:
   except:
