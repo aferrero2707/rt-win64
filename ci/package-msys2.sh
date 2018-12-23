@@ -280,7 +280,7 @@ sudo pacman --noconfirm -S zip || exit 1
 
 rm -f $TRAVIS_BUILD_DIR/${bundle_package}_${bundle_version}.zip
 cd $repackagedir/../
-zip -q -r $TRAVIS_BUILD_DIR/${bundle_package}_${bundle_version}.zip $bundle_package-$bundle_version
+sudo zip -q -r $TRAVIS_BUILD_DIR/${bundle_package}_${bundle_version}.zip $bundle_package-$bundle_version
 #transfer $TRAVIS_BUILD_DIR/$bundle_package-$bundle_version.zip
 
 exit 
