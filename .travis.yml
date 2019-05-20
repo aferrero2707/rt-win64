@@ -6,8 +6,8 @@ sudo: required
 services: docker
 env: 
   - RT_BRANCH=dev
-  #- RT_BRANCH=newlocallab
-  #- RT_BRANCH=waveletnew
+  - RT_BRANCH=newlocallab
+  - RT_BRANCH=wavelenh
   #- RT_BRANCH=releases
   #- RT_BRANCH=release-5.5
 
