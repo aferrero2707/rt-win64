@@ -283,6 +283,9 @@ cd $repackagedir/../
 sudo zip -q -r $TRAVIS_BUILD_DIR/${bundle_package}_${bundle_version}.zip $bundle_package-$bundle_version
 #transfer $TRAVIS_BUILD_DIR/$bundle_package-$bundle_version.zip
 
+echo "cat /work/WindowsInnoSetup.iss"
+cat /work/WindowsInnoSetup.iss
+
 exit 
 
 cd /
