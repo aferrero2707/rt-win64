@@ -11,7 +11,7 @@ echo ""
 sudo apt-get -y update
 sudo apt-get install -y wget git || exit 1
 rm -f /tmp/commit-${GIT_BRANCH}.hash
-wget https://github.com/${TRAVIS_REPO_SLUG}/releases/download/${RELEASE}/commit-${GIT_BRANCH}.hash -O /tmp/commit-${GIT_BRANCH}.hash
+wget https://github.com/${TRAVIS_REPO_SLUG}/releases/download/${RELEASE}/commit-${GIT_BRANCH}-win64.hash -O /tmp/commit-${GIT_BRANCH}.hash
 
 rm -f travis.cancel
 if  [ -e /tmp/commit-${GIT_BRANCH}.hash ]; then
@@ -27,5 +27,5 @@ if  [ -e /tmp/commit-${GIT_BRANCH}.hash ]; then
 		exit 0
 	fi
 fi
-cp /tmp/commit-${GIT_BRANCH}-new.hash ./commit-${GIT_BRANCH}.hash
+cp /tmp/commit-${GIT_BRANCH}-new.hash ./commit-${GIT_BRANCH}-win64.hash
 
