@@ -31,14 +31,15 @@ before_script:
   #- bash ci/appimage2.sh
   - # check if zip file was successfully created
   - # abort job with failure if not
-  - ls RawTherapee_*.zip
+  - ls RawTherapee_${RT_BRANCH}-win64*.zip RawTherapee_${RT_BRANCH}-win64*.exe
   #- ls RawTherapee_*.exe
 after_success:
   - cd $TRAVIS_BUILD_DIR/RawTherapee
   - pwd
-  - ls RawTherapee_*.zip
-  - ls RawTherapee_*.exe
+  - ls RawTherapee_${RT_BRANCH}-win64*.zip RawTherapee_${RT_BRANCH}-win64*.exe
   - wget -c https://github.com/aferrero2707/uploadtool/raw/master/remove.sh
+  - bash ./remove.sh "continuous" "RawTherapee_${RT_BRANCH}-win64" ".zip"
+  - bash ./remove.sh "continuous" "RawTherapee_${RT_BRANCH}-win64" ".exe"
   #- TRAVIS_REPO_SLUG="Beep6581/RawTherapee" bash ./remove.sh "nightly" "RawTherapee-${RT_BRANCH}-" ".AppImage"
   - wget -c https://github.com/aferrero2707/uploadtool/raw/master/upload_rotate.sh
   #- TRAVIS_REPO_SLUG="Beep6581/RawTherapee" bash  ./upload_rotate.sh "nightly" out/* >& /dev/null
