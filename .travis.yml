@@ -31,12 +31,13 @@ before_script:
   #- bash ci/appimage2.sh
   - # check if zip file was successfully created
   - # abort job with failure if not
-  - ls RawTherapee_${RT_BRANCH}-win64*.zip RawTherapee_${RT_BRANCH}-win64*.exe
-  #- ls RawTherapee_*.exe
+  #- ls RawTherapee_${RT_BRANCH}-win64*.zip RawTherapee_${RT_BRANCH}-win64*.exe
+  - ls -lhrt
 after_success:
   - cd $TRAVIS_BUILD_DIR/RawTherapee
   - pwd
-  - ls RawTherapee_${RT_BRANCH}-win64*.zip RawTherapee_${RT_BRANCH}-win64*.exe
+  #- ls RawTherapee_${RT_BRANCH}-win64*.zip RawTherapee_${RT_BRANCH}-win64*.exe
+  - ls -lhrt
   - wget -c https://github.com/aferrero2707/uploadtool/raw/master/remove.sh
   - bash ./remove.sh "continuous" "RawTherapee_${RT_BRANCH}-win64" ".zip"
   - bash ./remove.sh "continuous" "RawTherapee_${RT_BRANCH}-win64" ".exe"
