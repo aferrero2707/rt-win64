@@ -38,7 +38,7 @@ RT_VERSION=$(cat  /work/w64-build/rt/rtdata/WindowsInnoSetup.iss | grep " MyAppV
 bundle_version="${TRAVIS_BRANCH}-win64-${RT_VERSION}"
 #repackagedir=$TRAVIS_BUILD_DIR/$bundle_package-$bundle_version
 repackagedir=/work/$bundle_package-$bundle_version
-cat /work/w64-build/rt/rtdata/WindowsInnoSetup.iss | sed -e "s|/work/w64-build/${RT_PREFIX}|$repackagedir|g" | sed -e "s|\"${RT_VERSION}\"|\"${bundle_version}\"|g" > /work/WindowsInnoSetup.iss
+cat /work/w64-build/rt/rtdata/WindowsInnoSetup.iss | sed -e "s|/work/w64-build/rt/${RT_PREFIX}|$repackagedir|g" | sed -e "s|\"${RT_VERSION}\"|\"${bundle_version}\"|g" > /work/WindowsInnoSetup.iss
 cat /work/WindowsInnoSetup.iss
 
 
@@ -209,7 +209,7 @@ mv "$repackagedir/share/icons/adwaita-temp" "$repackagedir/share/icons/adwaita"
 
 
 
-rm -rf "$repackagedir/licenses"
+#rm -rf "$repackagedir/licenses"
 
 
 # we need to copy the C++ runtime dlls in there
@@ -230,6 +230,7 @@ sudo lensfun-update-data
 mkdir -p $repackagedir/share/lensfun
 cp -a /var/lib/lensfun-updates/version_1/* $repackagedir/share/lensfun
 
+if [ "x" = "y" ]; then
 #(cd $repackagedir && \
 #wget http://ftp.gnome.org/pub/gnome/sources/adwaita-icon-theme/3.26/adwaita-icon-theme-3.26.0.tar.xz && \
 #tar xJf adwaita-icon-theme-3.26.0.tar.xz && cp -a adwaita-icon-theme-3.26.0/Adwaita $repackagedir/share/icons && \
@@ -243,6 +244,12 @@ echo "==================="
 echo "Contents of $repackagedir/share/icons:"
 ls $repackagedir/share/icons
 echo "==================="
+fi
+
+
+#if [ ! -e $HOME/.wine ]; then
+#	(cd $HOME && tar xzvf /sources/ci/wine.tgz) || exit 1
+#fi
 
 
 sudo pacman --noconfirm -S wine || exit 1
@@ -262,9 +269,9 @@ mkdir -p "$repackagedir/share/glib-2.0/schemas"
 cp -a /mingw64/share/glib-2.0/schemas/* "$repackagedir/share/glib-2.0/schemas"
 glib-compile-schemas "$repackagedir/share/glib-2.0/schemas"
 
-mkdir -p "$repackagedir/share/GTK3" || exit 1
-echo '[Settings]' >> "$repackagedir/share/GTK3/settings.ini"
-echo 'gtk-button-images=1' >> "$repackagedir/share/GTK3/settings.ini"
+mkdir -p "$repackagedir/share/gtk-3.0" || exit 1
+echo '[Settings]' >> "$repackagedir/share/gtk-3.0/settings.ini"
+echo 'gtk-button-images=1' >> "$repackagedir/share/gtk-3.0/settings.ini"
 
 # Remove debugging symbols from AppImage binaries and libraries
 #find "${repackagedir}" -type f -regex '.*\.dll' -print0 | xargs -0 --no-run-if-empty --verbose -n1 strip
@@ -287,10 +294,10 @@ sudo zip -q -r $TRAVIS_BUILD_DIR/${bundle_package}_${bundle_version}.zip $bundle
 #echo "cat /work/WindowsInnoSetup.iss"
 #cat /work/WindowsInnoSetup.iss
 
-exit 
+#exit 
 
 cd /
-dpkg --add-architecture i386 && apt-get update -y && apt-get install -y wine32
+#dpkg --add-architecture i386 && apt-get update -y && apt-get install -y wine32
 wine ~/.wine/drive_c/Program\ Files\ \(x86\)/Inno\ Setup\ 5/ISCC.exe - < /work/WindowsInnoSetup.iss
 cp "$repackagedir/.."/RawTherapee_*.exe "$TRAVIS_BUILD_DIR"
 
