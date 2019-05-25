@@ -46,7 +46,7 @@ after_success:
   #- TRAVIS_REPO_SLUG="Beep6581/RawTherapee" bash  ./upload_rotate.sh "nightly" out/* >& /dev/null
   #- TRAVIS_REPO_SLUG="Beep6581/RawTherapee" bash  ./upload_rotate.sh "nightly" $TRAVIS_BUILD_DIR/RawTherapee/commit-${RT_BRANCH}.hash >& /dev/null
   - bash  ./upload_rotate.sh "continuous" RawTherapee*.zip >& /dev/null
-  #- bash  ./upload_rotate.sh "continuous" RawTherapee*.exe >& /dev/null
+  - bash  ./upload_rotate.sh "continuous" RawTherapee*.exe >& /dev/null
   - bash  ./upload_rotate.sh "continuous" $TRAVIS_BUILD_DIR/RawTherapee/commit-${RT_BRANCH}-win64.hash >& /dev/null
 branches:
   except:
