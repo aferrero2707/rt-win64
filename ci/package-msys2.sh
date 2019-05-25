@@ -87,7 +87,7 @@ echo "cleaning build \"$repackagedir\""
 #if [ ! -e $repackagedir/bin ]; then echo "$repackagedir/bin not found."; exit; fi
 #if [ ! -e $repackagedir/lib ]; then echo "$repackagedir/lib not found."; exit; fi
 
-wget ftp://ftp.equation.com/gdb/64/gdb.exe -O $repackagedir/gdb.exe
+#wget ftp://ftp.equation.com/gdb/64/gdb.exe -O $repackagedir/gdb.exe
 
 cp -a /mingw64/bin/gspawn-win64-helper* "$repackagedir"
 
@@ -105,7 +105,7 @@ pwd
 #( cd $repackagedir/bin ; mkdir poop ; mv zlib1.dll poop ; strip --strip-unneeded *.dll ; mv poop/zlib1.dll . ; rmdir poop )
 
 
-( cd $repackagedir/share && rm -rf aclocal applications doc glib-2.0 gtk-2.0 gtk-doc ImageMagick-* info jhbuild man mime pixmaps xml goffice locale icons)
+( cd $repackagedir/share && rm -rf aclocal applications doc glib-2.0 gtk-2.0 gtk-doc ImageMagick-* info jhbuild man mime pixmaps xml goffice locale)
 
 ( cd $repackagedir && rm -rf include )
 
@@ -189,24 +189,30 @@ vala; do
 done
 
 
+
+if [ "x" = "x" ]; then
 # Remove unneeded icons
+ls "$repackagedir/share/icons"
+rm -rf "$repackagedir/share/icons/adwaita-temp"
 mkdir -p "$repackagedir/share/icons/adwaita-temp/scalable"
-mv "$repackagedir/share/icons/adwaita/scalable/actions" "$repackagedir/share/icons/adwaita-temp/scalable"
-mv "$repackagedir/share/icons/adwaita/scalable/devices" "$repackagedir/share/icons/adwaita-temp/scalable"
-mv "$repackagedir/share/icons/adwaita/scalable/mimetypes" "$repackagedir/share/icons/adwaita-temp/scalable"
-mv "$repackagedir/share/icons/adwaita/scalable/places" "$repackagedir/share/icons/adwaita-temp/scalable"
-mv "$repackagedir/share/icons/adwaita/scalable/status" "$repackagedir/share/icons/adwaita-temp/scalable"
-mv index.theme "$repackagedir/share/icons/adwaita-temp"
+mv "$repackagedir/share/icons/Adwaita/scalable/actions" "$repackagedir/share/icons/adwaita-temp/scalable"
+mv "$repackagedir/share/icons/Adwaita/scalable/devices" "$repackagedir/share/icons/adwaita-temp/scalable"
+mv "$repackagedir/share/icons/Adwaita/scalable/mimetypes" "$repackagedir/share/icons/adwaita-temp/scalable"
+mv "$repackagedir/share/icons/Adwaita/scalable/places" "$repackagedir/share/icons/adwaita-temp/scalable"
+mv "$repackagedir/share/icons/Adwaita/scalable/status" "$repackagedir/share/icons/adwaita-temp/scalable"
+#mv index.theme "$repackagedir/share/icons/adwaita-temp"
 mkdir -p "$repackagedir/share/icons/adwaita-temp/cursors"
-mv "$repackagedir/share/icons/adwaita/cursors/plus.cur" "$repackagedir/share/icons/adwaita-temp/cursors"
-mv "$repackagedir/share/icons/adwaita/cursors/sb_h_double_arrow.cur" "$repackagedir/share/icons/adwaita-temp/cursors"
-mv "$repackagedir/share/icons/adwaita/cursors/sb_left_arrow.cur" "$repackagedir/share/icons/adwaita-temp/cursors"
-mv "$repackagedir/share/icons/adwaita/cursors/sb_right_arrow.cur" "$repackagedir/share/icons/adwaita-temp/cursors"
-mv "$repackagedir/share/icons/adwaita/cursors/sb_v_double_arrow.cur" "$repackagedir/share/icons/adwaita-temp/cursors"
+mv "$repackagedir/share/icons/Adwaita/cursors/plus.cur" "$repackagedir/share/icons/adwaita-temp/cursors"
+mv "$repackagedir/share/icons/Adwaita/cursors/sb_h_double_arrow.cur" "$repackagedir/share/icons/adwaita-temp/cursors"
+mv "$repackagedir/share/icons/Adwaita/cursors/sb_left_arrow.cur" "$repackagedir/share/icons/adwaita-temp/cursors"
+mv "$repackagedir/share/icons/Adwaita/cursors/sb_right_arrow.cur" "$repackagedir/share/icons/adwaita-temp/cursors"
+mv "$repackagedir/share/icons/Adwaita/cursors/sb_v_double_arrow.cur" "$repackagedir/share/icons/adwaita-temp/cursors"
+fi
 
-rm -rf "$repackagedir/share/icons/adwaita"
-mv "$repackagedir/share/icons/adwaita-temp" "$repackagedir/share/icons/adwaita"
-
+rm -rf "$repackagedir/share/icons/Adwaita"
+mv "$repackagedir/share/icons/adwaita-temp" "$repackagedir/share/icons/Adwaita"
+rm -rf "$repackagedir/share/icons/hicolor"
+#exit
 
 
 #rm -rf "$repackagedir/licenses"
@@ -240,11 +246,12 @@ echo "Contents of /mingw64/share/icons:"
 ls /mingw64/share/icons
 echo "==================="
 (cp -a /mingw64/share/icons $repackagedir/share) || exit 1
+fi
 echo "==================="
 echo "Contents of $repackagedir/share/icons:"
 ls $repackagedir/share/icons
 echo "==================="
-fi
+#exit
 
 
 #if [ ! -e $HOME/.wine ]; then
