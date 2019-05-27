@@ -190,17 +190,19 @@ done
 
 
 
-if [ "x" = "x" ]; then
 # Remove unneeded icons
 ls "$repackagedir/share/icons"
 rm -rf "$repackagedir/share/icons/adwaita-temp"
-mkdir -p "$repackagedir/share/icons/adwaita-temp/scalable"
+mkdir -p "$repackagedir/share/icons/adwaita-temp"
+mv "$repackagedir/share/icons/Adwaita/index.theme" "$repackagedir/share/icons/adwaita-temp" || exit 1
+mv "$repackagedir/share/icons/Adwaita/scalable" "$repackagedir/share/icons/adwaita-temp"
+
+if [ "x" = "y" ]; then
 mv "$repackagedir/share/icons/Adwaita/scalable/actions" "$repackagedir/share/icons/adwaita-temp/scalable"
 mv "$repackagedir/share/icons/Adwaita/scalable/devices" "$repackagedir/share/icons/adwaita-temp/scalable"
 mv "$repackagedir/share/icons/Adwaita/scalable/mimetypes" "$repackagedir/share/icons/adwaita-temp/scalable"
 mv "$repackagedir/share/icons/Adwaita/scalable/places" "$repackagedir/share/icons/adwaita-temp/scalable"
 mv "$repackagedir/share/icons/Adwaita/scalable/status" "$repackagedir/share/icons/adwaita-temp/scalable"
-#mv index.theme "$repackagedir/share/icons/adwaita-temp"
 mkdir -p "$repackagedir/share/icons/adwaita-temp/cursors"
 mv "$repackagedir/share/icons/Adwaita/cursors/plus.cur" "$repackagedir/share/icons/adwaita-temp/cursors"
 mv "$repackagedir/share/icons/Adwaita/cursors/sb_h_double_arrow.cur" "$repackagedir/share/icons/adwaita-temp/cursors"
