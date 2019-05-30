@@ -24,11 +24,13 @@ transfer()
 export installdir=/mingw64
 
 export RT_PREFIX=Release
+export RT_PREFIX_DEBUG=Debug
 
 if [ ! -e /work/build.done ]; then
 	rm -f /work/w64-build/rt/${RT_PREFIX}/rawtherapee.exe
 	$TRAVIS_BUILD_DIR/ci/build-msys2.sh || exit 1
 	if [ ! -e /work/w64-build/rt/${RT_PREFIX}/rawtherapee.exe ]; then exit 1; fi
+	if [ ! -e /work/w64-build/rt-debug/${RT_PREFIX_DEBUG}/rawtherapee.exe ]; then exit 1; fi
 fi
 
 
@@ -71,6 +73,7 @@ rm -rf $repackagedir/wine
 #mkdir $repackagedir/bin
 #(cp -L $installdir/bin/* $repackagedir/bin) || exit 1
 (cp -a /work/w64-build/rt/${RT_PREFIX}/* $repackagedir) || exit 1
+(cp -a /work/w64-build/rt-debug/${RT_PREFIX_DEBUG}/rawtherapee.exe $repackagedir) || exit 1
 (cp -L $installdir/lib/*.dll $repackagedir/) #|| exit 1
 (cp -L $installdir/bin/*.dll $repackagedir/) #|| exit 1
 echo "================="; echo ""
@@ -87,7 +90,7 @@ echo "cleaning build \"$repackagedir\""
 #if [ ! -e $repackagedir/bin ]; then echo "$repackagedir/bin not found."; exit; fi
 #if [ ! -e $repackagedir/lib ]; then echo "$repackagedir/lib not found."; exit; fi
 
-#wget ftp://ftp.equation.com/gdb/64/gdb.exe -O $repackagedir/gdb.exe
+wget ftp://ftp.equation.com/gdb/64/gdb.exe -O $repackagedir/gdb.exe
 
 cp -a /mingw64/bin/gspawn-win64-helper* "$repackagedir"
 

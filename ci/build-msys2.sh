@@ -57,6 +57,21 @@ cd /work/w64-build/rt || exit 1
  -DCMAKE_POLICY_DEFAULT_CMP0074=NEW \
  -DWIN32=TRUE \
  /sources && make -j 3 install) || exit 1
+
+
+echo "Compiling RawTherapee (Debug version)"
+ls /sources
+mkdir -p /work/w64-build/rt-debug || exit 1
+cd /work/w64-build/rt-debug || exit 1
+#(cd /sources; sudo patch -N -p0 < ci/rtgui-options-headers.patch; sudo patch -N -p0 < ci/rtgui-pixbuf-env.patch; sudo patch -N -p0 < ci/rtgui-GTK_CSD-env.patch; sudo patch -N -p0 < ci/rtgui-placesbrowser-headers.patch; sudo patch -N -p0 < ci/rt-innosetup.patch)
+#(x86_64-w64-mingw32-cmake \
+(cmake \
+ -DCMAKE_TOOLCHAIN_FILE=/etc/Toolchain-mingw-w64-x86_64.cmake \
+ -DCMAKE_BUILD_TYPE=Debug -DPROC_TARGET_NUMBER=1 \
+ -DCACHE_NAME_SUFFIX="'5-dev'" \
+ -DCMAKE_POLICY_DEFAULT_CMP0074=NEW \
+ -DWIN32=TRUE \
+ /sources && make -j 3 install) || exit 1
  
 
 echo ""
