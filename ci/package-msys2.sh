@@ -73,7 +73,7 @@ rm -rf $repackagedir/wine
 #mkdir $repackagedir/bin
 #(cp -L $installdir/bin/* $repackagedir/bin) || exit 1
 (cp -a /work/w64-build/rt/${RT_PREFIX}/* $repackagedir) || exit 1
-(cp -a /work/w64-build/rt-debug/${RT_PREFIX_DEBUG}/rawtherapee.exe $repackagedir) || exit 1
+(cp -a /work/w64-build/rt-debug/${RT_PREFIX_DEBUG}/rawtherapee.exe $repackagedir/rawtherapee-debug.exe) || exit 1
 (cp -L $installdir/lib/*.dll $repackagedir/) #|| exit 1
 (cp -L $installdir/bin/*.dll $repackagedir/) #|| exit 1
 echo "================="; echo ""
