@@ -41,6 +41,14 @@ sed -i -e 's|iptc docs||g' Makefile || exit 1
 fi
 
 
+# RawTherapee build and install
+if [ x"${RT_BRANCH}" = "xreleases" ]; then
+    CACHE_SUFFIX=""
+else
+    CACHE_SUFFIX="5-${RT_BRANCH}-dev"
+fi
+echo "RT cache suffix: \"${CACHE_SUFFIX}\""
+
 echo "Compiling RawTherapee"
 ls /sources
 mkdir -p /work/w64-build/rt || exit 1
@@ -50,7 +58,7 @@ cd /work/w64-build/rt || exit 1
 (cmake \
  -DCMAKE_TOOLCHAIN_FILE=/etc/Toolchain-mingw-w64-x86_64.cmake \
  -DCMAKE_BUILD_TYPE=Release -DPROC_TARGET_NUMBER=1 \
- -DCACHE_NAME_SUFFIX="'5-dev'" \
+ -DCACHE_NAME_SUFFIX="${CACHE_SUFFIX}" \
  -DCMAKE_C_FLAGS="'-mwin32 -m64 -mthreads -msse2'" \
  -DCMAKE_C_FLAGS_RELEASE="'-DNDEBUG -O2'" \
  -DCMAKE_CXX_FLAGS="'-mwin32 -m64 -mthreads -msse2'" \
@@ -71,7 +79,7 @@ cd /work/w64-build/rt-debug || exit 1
 (cmake \
  -DCMAKE_TOOLCHAIN_FILE=/etc/Toolchain-mingw-w64-x86_64.cmake \
  -DCMAKE_BUILD_TYPE=Debug -DPROC_TARGET_NUMBER=1 \
- -DCACHE_NAME_SUFFIX="'5-dev'" \
+ -DCACHE_NAME_SUFFIX="${CACHE_SUFFIX}" \
  -DCMAKE_POLICY_DEFAULT_CMP0074=NEW \
  -DWIN32=TRUE \
  /sources && make -j 3 install) || exit 1
