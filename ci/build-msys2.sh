@@ -42,10 +42,10 @@ fi
 
 
 # RawTherapee build and install
-if [ x"${RT_BRANCH}" = "xreleases" ]; then
+if [ x"${TRAVIS_BRANCH}" = "xreleases" ]; then
     CACHE_SUFFIX=""
 else
-    CACHE_SUFFIX="5-${RT_BRANCH}-dev"
+    CACHE_SUFFIX="5-${TRAVIS_BRANCH}-dev"
 fi
 echo "RT cache suffix: \"${CACHE_SUFFIX}\""
 
