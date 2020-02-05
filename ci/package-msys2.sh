@@ -254,7 +254,7 @@ cp -L $mingwlibdir/*.dll $repackagedir/
 sudo pacman --noconfirm -S lensfun || exit 1
 sudo lensfun-update-data
 mkdir -p $repackagedir/share/lensfun
-cp -a /var/lib/lensfun-updates/version_1/* $repackagedir/share/lensfun
+cp -a /var/lib/lensfun-updates/version_2/* $repackagedir/share/lensfun
 
 if [ "x" = "y" ]; then
 #(cd $repackagedir && \
@@ -289,7 +289,7 @@ rm -rf $repackagedir/etc
 rm -f $repackagedir/icu*.dll $repackagedir/libgdkmm-2.4*.dll $repackagedir/libgfortran-*.dll $repackagedir/libgtkmm-2.4*.dll $repackagedir/libvips-*.dll
 #rm -rf "$repackagedir/share/icons/Adwaita"/scalable*
 rm -rf "$repackagedir/lib/gtk-2.0"
-for dir in GConf bash-completion devhelp fontconfig gettext icu "lensfun/version_1" locale man pkgconfig themes; do
+for dir in GConf bash-completion devhelp fontconfig gettext icu "lensfun/version_2" locale man pkgconfig themes; do
   rm -rf "$repackagedir/share/$dir"
 done
 
