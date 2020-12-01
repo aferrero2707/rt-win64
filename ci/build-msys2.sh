@@ -1,5 +1,6 @@
 #! /bin/bash
 
+sudo pacman-key --refresh-keys || exit 1
 sudo pacman --noconfirm -Syu || exit 1
 sudo pacman --noconfirm -S wget || exit 1
 (sudo mkdir -p /work && sudo chmod a+w /work) || exit 1
