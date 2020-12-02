@@ -1,7 +1,7 @@
 #! /bin/bash
 
 #sudo pacman-key --refresh-keys || exit 1
-sudo pacman -S archlinux-keyring || exit 1
+sudo pacman --noconfirm -S archlinux-keyring || exit 1
 sudo pacman-key --populate archlinux || exit 1
 sudo pacman --noconfirm -Syu || exit 1
 sudo pacman --noconfirm -S wget || exit 1
