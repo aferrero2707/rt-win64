@@ -250,9 +250,24 @@ cp -L $mingwlibdir/*.dll $repackagedir/
 #mkdir -p $repackagedir/share/glib-2.0/schemas
 #cp -a $installdir/share/glib-2.0/schemas/gschemas.compiled $repackagedir/share/glib-2.0/schemas
 
-(cd /tmp && rm -f lensfun*.pkg.tar.xz && wget https://archive.archlinux.org/packages/l/lensfun/lensfun-0.3.2-9-x86_64.pkg.tar.xz &&
-sudo pacman --noconfirm -U lensfun-0.3.2-9-x86_64.pkg.tar.xz) || exit 1
-sudo pacman --noconfirm -S python || exit 1
+#(cd /tmp && rm -f lensfun*.pkg.tar.xz && wget https://archive.archlinux.org/packages/l/lensfun/lensfun-0.3.2-9-x86_64.pkg.tar.xz &&
+#sudo pacman --noconfirm -U lensfun-0.3.2-9-x86_64.pkg.tar.xz) || exit 1
+sudo pacman --noconfirm -S python-devel  || exit 1
+
+LFV=0.3.2
+msg "Building and installing LensFun $LFV"
+
+# Lensfun build and install
+(cd /work &&
+    rm -rf lensfun* &&
+    wget https://launchpad.net/ubuntu/+archive/primary/+sourcefiles/lensfun/0.3.2-5/lensfun_0.3.2.orig.tar.gz &&
+    tar xzvf "lensfun_0.3.2.orig.tar.gz" &&
+    cd "lensfun-${LFV}" &&
+    mkdir -p build &&
+    cd build &&
+    cmake3 -DCMAKE_BUILD_TYPE="release" -DCMAKE_INSTALL_PREFIX="/usr/local" ../ &&
+    make --jobs=2 VERBOSE=1 install && cd /work && rm -rf lensfun*) || exit 1
+
 sudo lensfun-update-data || exit 1
 mkdir -p $repackagedir/share/lensfun
 cp -a /var/lib/lensfun-updates/version_1/* $repackagedir/share/lensfun || exit 1

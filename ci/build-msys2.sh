@@ -2,6 +2,7 @@
 
 #sudo pacman-key --refresh-keys || exit 1
 sudo cp /etc/resolv.conf.host /etc/resolv.conf || exit 1
+sudo pacman --noconfirm -Syu || exit 1
 sudo pacman --noconfirm -S archlinux-keyring || exit 1
 sudo pacman-key --populate archlinux || exit 1
 sudo pacman --noconfirm -Syu || exit 1
@@ -30,6 +31,7 @@ for PKG in mingw-w64-x86_64-lensfun-0.3.2-5-any.pkg.tar.zst; do
 	wget https://mirror.yandex.ru/mirrors/msys2/mingw/x86_64/"$PKG" || exit 1
 	sudo pacman --noconfirm --config /etc/pacman-msys.conf -U "$PKG" || exit 1
 done
+#sudo pacman --noconfirm --config /etc/pacman-msys.conf -S mingw64/mingw-w64-x86_64-lensfun || exit 1
 
 sudo pacman --noconfirm --config /etc/pacman-msys.conf -S \
 mingw64/mingw-w64-x86_64-fftw mingw64/mingw-w64-x86_64-libtiff mingw64/mingw-w64-x86_64-lcms2 mingw64/mingw-w64-x86_64-libjpeg-turbo || exit 1
