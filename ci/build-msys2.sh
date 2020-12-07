@@ -83,6 +83,7 @@ cd /work/w64-build/rt || exit 1
  -DCMAKE_EXE_LINKER_FLAGS_RELEASE="'-s -O3'" \
  -DCMAKE_POLICY_DEFAULT_CMP0074=NEW \
  -DWIN32=TRUE \
+ -DLENSFUNDBDIR=./share/lensfun \
  /sources && make -j 3 install) || exit 1
 
 
@@ -98,6 +99,7 @@ cd /work/w64-build/rt-debug || exit 1
  -DCACHE_NAME_SUFFIX="${CACHE_SUFFIX}" \
  -DCMAKE_POLICY_DEFAULT_CMP0074=NEW \
  -DWIN32=TRUE \
+ -DLENSFUNDBDIR=./share/lensfun \
  /sources && make -j 3 install) || exit 1
  
 
