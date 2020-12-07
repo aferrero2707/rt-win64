@@ -252,7 +252,7 @@ cp -L $mingwlibdir/*.dll $repackagedir/
 
 #(cd /tmp && rm -f lensfun*.pkg.tar.xz && wget https://archive.archlinux.org/packages/l/lensfun/lensfun-0.3.2-9-x86_64.pkg.tar.xz &&
 #sudo pacman --noconfirm -U lensfun-0.3.2-9-x86_64.pkg.tar.xz) || exit 1
-sudo pacman --noconfirm -S python-devel  || exit 1
+sudo pacman --noconfirm -S python  || exit 1
 
 LFV=0.3.2
 msg "Building and installing LensFun $LFV"
