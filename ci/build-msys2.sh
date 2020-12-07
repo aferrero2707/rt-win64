@@ -2,10 +2,12 @@
 
 #sudo pacman-key --refresh-keys || exit 1
 sudo cp /etc/resolv.conf.host /etc/resolv.conf || exit 1
+echo ""; echo "Content of /etc/resolv.conf:"
+cat /etc/resolv.conf
+echo ""
 sudo pacman --noconfirm -Syu || exit 1
 sudo pacman --noconfirm -S archlinux-keyring || exit 1
 sudo pacman-key --populate archlinux || exit 1
-sudo pacman --noconfirm -Syu || exit 1
 sudo pacman --noconfirm -S wget || exit 1
 (sudo mkdir -p /work && sudo chmod a+w /work) || exit 1
 
