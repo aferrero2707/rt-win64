@@ -265,7 +265,7 @@ msg "Building and installing LensFun $LFV"
     cd "lensfun-${LFV}" &&
     mkdir -p build &&
     cd build &&
-    cmake3 -DCMAKE_BUILD_TYPE="release" -DCMAKE_INSTALL_PREFIX="/usr/local" ../ &&
+    cmake -DCMAKE_BUILD_TYPE="release" -DCMAKE_INSTALL_PREFIX="/usr/local" ../ &&
     make --jobs=2 VERBOSE=1 install && cd /work && rm -rf lensfun*) || exit 1
 
 sudo lensfun-update-data || exit 1
