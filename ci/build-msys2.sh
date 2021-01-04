@@ -86,7 +86,7 @@ cd /work/w64-build/rt || exit 1
  -DLENSFUNDBDIR=./share/lensfun \
  /sources && make -j 3 install) || exit 1
 
-
+if [ "x" = "y" ]; then
 echo "Compiling RawTherapee (Debug version)"
 ls /sources
 mkdir -p /work/w64-build/rt-debug || exit 1
@@ -101,14 +101,14 @@ cd /work/w64-build/rt-debug || exit 1
  -DWIN32=TRUE \
  -DLENSFUNDBDIR=./share/lensfun \
  /sources && make -j 3 install) || exit 1
- 
+fi
 
+if [ "x" = "y" ]; then
 echo ""
 echo "########################################################################"
 echo ""
 echo "Install Hicolor and Adwaita icon themes"
 
-if [ "x" = "y" ]; then
 (cd /work/w64-build && rm -rf hicolor-icon-theme-0.* && \
 wget http://icon-theme.freedesktop.org/releases/hicolor-icon-theme-0.17.tar.xz && \
 tar xJf hicolor-icon-theme-0.17.tar.xz && cd hicolor-icon-theme-0.17 && \
