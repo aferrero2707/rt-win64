@@ -1,5 +1,6 @@
 #!/bin/bash
-
+set -1
+echo "package-msys2.sh 3"
 # transfer.sh
 transfer() 
 { 
