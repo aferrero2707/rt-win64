@@ -6,11 +6,11 @@ echo ""; echo "Content of /etc/resolv.conf:"
 cat /etc/resolv.conf
 echo ""
 echo "build-msys2.sh 8"
-sudo pacman --noconfirm -Syu || exit 1
-echo "build-msys2.sh 10"
 sudo pacman --noconfirm -S archlinux-keyring || exit 1
-echo "build-msys2.sh 12"
+echo "build-msys2.sh 10"
 sudo pacman-key --populate archlinux || exit 1
+echo "build-msys2.sh 12"
+sudo pacman --noconfirm -Syu || exit 1
 echo "build-msys2.sh 14"
 sudo pacman --noconfirm -S wget || exit 1
 echo "build-msys2.sh 16"
