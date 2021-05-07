@@ -1,5 +1,5 @@
 #! /bin/bash
-
+set -x
 export RT_BRANCH=dev
 #rm -rf RawTherapee
 if [ ! -e RawTherapee ]; then
