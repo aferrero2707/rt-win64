@@ -5,34 +5,38 @@ sudo cp /etc/resolv.conf.host /etc/resolv.conf || exit 1
 echo ""; echo "Content of /etc/resolv.conf:"
 cat /etc/resolv.conf
 echo ""
-echo "1"
+echo "build-msys2.sh 8"
 sudo pacman --noconfirm -Syu || exit 1
-echo "2"
+echo "build-msys2.sh 10"
 sudo pacman --noconfirm -S archlinux-keyring || exit 1
-echo "3"
+echo "build-msys2.sh 12"
 sudo pacman-key --populate archlinux || exit 1
-echo "4"
+echo "build-msys2.sh 14"
 sudo pacman --noconfirm -S wget || exit 1
-echo "5"
+echo "build-msys2.sh 16"
 (sudo mkdir -p /work && sudo chmod a+w /work) || exit 1
-
+echo "build-msys2.sh 18"
 cd /work || exit 1
-
+echo "build-msys2.sh 20"
 (rm -f pacman-msys.conf && wget https://raw.githubusercontent.com/aferrero2707/docker-buildenv-mingw/master/pacman-msys.conf && sudo cp pacman-msys.conf /etc/pacman-msys.conf) || exit 1
+echo "build-msys2.sh 22"
 (rm -f Toolchain-mingw-w64-x86_64.cmake && wget https://raw.githubusercontent.com/aferrero2707/docker-buildenv-mingw/master/Toolchain-mingw-w64-x86_64.cmake && sudo cp Toolchain-mingw-w64-x86_64.cmake /etc/Toolchain-mingw-w64-x86_64.cmake) || exit 1
-
+echo "build-msys2.sh 24"
 MSYS2MIRROR=https://repo.msys2.org
 #MSYS2MIRROR=https://mirror.yandex.ru/mirrors/msys2
-
+echo "build-msys2.sh 27"
 (wget $MSYS2MIRROR/msys/x86_64/http://repo.msys2.org/msys/x86_64/msys2-keyring-1~20210213-2-any.pkg.tar.zst && wget $MSYS2MIRROR/msys/x86_64/http://repo.msys2.org/msys/x86_64/msys2-keyring-1~20210213-2-any.pkg.tar.zst.sig && \
  sudo pacman-key --verify msys2-keyring-1~20210213-2-any.pkg.tar.zst{.sig,}) || exit 1
+echo "build-msys2.sh 30"
 echo "Installing MSYS2 keyring"
+echo "build-msys2.sh 32"
 sudo pacman --noconfirm -U msys2-keyring-1~20210213-2-any.pkg.tar.zst || exit 1
-
+echo "build-msys2.sh 34"
 echo "Updating MSYS2"
 sudo pacman --noconfirm --config /etc/pacman-msys.conf -Syu || exit 1
+echo "build-msys2.sh 37"
 sudo pacman-key --populate archlinux
-set +x
+echo "build-msys2.sh 39"
 
 #for PKG in mingw-w64-x86_64-libjpeg-turbo-1.5.3-1-any.pkg.tar.xz mingw-w64-x86_64-lensfun-0.3.2-4-any.pkg.tar.xz mingw-w64-x86_64-gtk3-3.22.30-1-any.pkg.tar.xz mingw-w64-x86_64-gtkmm3-3.22.3-1-any.pkg.tar.xz; do
 for PKG in mingw-w64-x86_64-lensfun-0.3.2-5-any.pkg.tar.zst; do
@@ -138,3 +142,4 @@ ls /mingw64/share/icons
 echo ""
 
 touch /work/build.done
+set +x
