@@ -16,8 +16,8 @@ cd /work || exit 1
 (rm -f pacman-msys.conf && wget https://raw.githubusercontent.com/aferrero2707/docker-buildenv-mingw/master/pacman-msys.conf && sudo cp pacman-msys.conf /etc/pacman-msys.conf) || exit 1
 (rm -f Toolchain-mingw-w64-x86_64.cmake && wget https://raw.githubusercontent.com/aferrero2707/docker-buildenv-mingw/master/Toolchain-mingw-w64-x86_64.cmake && sudo cp Toolchain-mingw-w64-x86_64.cmake /etc/Toolchain-mingw-w64-x86_64.cmake) || exit 1
 
-#MSYS2MIRROR=http://repo.msys2.org
-MSYS2MIRROR=https://mirror.yandex.ru/mirrors/msys2
+MSYS2MIRROR=http://repo.msys2.org
+#MSYS2MIRROR=https://mirror.yandex.ru/mirrors/msys2
 
 (wget $MSYS2MIRROR/msys/x86_64/msys2-keyring-r21.b39fb11-1-any.pkg.tar.xz && wget $MSYS2MIRROR/msys/x86_64/msys2-keyring-r21.b39fb11-1-any.pkg.tar.xz.sig && \
  sudo pacman-key --verify msys2-keyring-r21.b39fb11-1-any.pkg.tar.xz{.sig,}) || exit 1
