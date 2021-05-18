@@ -271,7 +271,9 @@ msg "Building and installing LensFun $LFV"
 
 sudo lensfun-update-data || exit 1
 mkdir -p $repackagedir/share/lensfun
+echo "Copying LF database from /var/lib/lensfun-updates/version_1"
 cp -a /var/lib/lensfun-updates/version_1/* $repackagedir/share/lensfun || exit 1
+echo "LF DB copied."
 
 if [ "x" = "y" ]; then
 #(cd $repackagedir && \
@@ -296,8 +298,8 @@ echo "==================="
 #fi
 
 
-(cd /tmp && rm -f wine-4.*.pkg.tar.xz && wget https://archive.archlinux.org/packages/w/wine/wine-4.17-1-x86_64.pkg.tar.xz && sudo pacman -U --noconfirm wine-4.*.pkg.tar.xz) || exit 1
-#sudo pacman --noconfirm -S wine || exit 1
+#(cd /tmp && rm -f wine-4.*.pkg.tar.xz && wget https://archive.archlinux.org/packages/w/wine/wine-4.17-1-x86_64.pkg.tar.xz && sudo pacman -U --noconfirm wine-4.*.pkg.tar.xz) || exit 1
+sudo pacman --noconfirm -S wine || exit 1
 wine /mingw64/bin/gdk-pixbuf-query-loaders.exe | sed -e "s%Z:/mingw64/%%g" > $repackagedir/lib/gdk-pixbuf-2.0/2.10.0/loaders.cache
 cat $repackagedir/lib/gdk-pixbuf-2.0/2.10.0/loaders.cache
 
