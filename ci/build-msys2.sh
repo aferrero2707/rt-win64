@@ -6,26 +6,33 @@ echo ""; echo "Content of /etc/resolv.conf:"
 cat /etc/resolv.conf
 echo ""
 echo "build-msys2.sh 8"
-sudo pacman --noconfirm -S archlinux-keyring || exit 1
+sudo pacman --noconfirm -Sy archlinux-keyring || exit 1
 echo "build-msys2.sh 10"
 sudo pacman-key --populate archlinux || exit 1
 echo "build-msys2.sh 12"
-sudo pacman --noconfirm -Syu || exit 1
+sudo pacman --noconfirm -Su || exit 1
 echo "build-msys2.sh 14"
 sudo pacman --noconfirm -S wget || exit 1
 echo "build-msys2.sh 16"
 (sudo mkdir -p /work && sudo chmod a+w /work) || exit 1
 echo "build-msys2.sh 18"
 cd /work || exit 1
-echo "build-msys2.sh 20"
-(rm -f pacman-msys.conf && wget https://raw.githubusercontent.com/aferrero2707/docker-buildenv-mingw/master/pacman-msys.conf && sudo cp pacman-msys.conf /etc/pacman-msys.conf) || exit 1
+
 echo "build-msys2.sh 22"
 (rm -f Toolchain-mingw-w64-x86_64.cmake && wget https://raw.githubusercontent.com/aferrero2707/docker-buildenv-mingw/master/Toolchain-mingw-w64-x86_64.cmake && sudo cp Toolchain-mingw-w64-x86_64.cmake /etc/Toolchain-mingw-w64-x86_64.cmake) || exit 1
-echo "build-msys2.sh 24"
+
+echo "Installing MSYS2 keyring"
 MSYS2MIRROR=https://repo.msys2.org
 #MSYS2MIRROR=https://mirror.yandex.ru/mirrors/msys2
-echo "build-msys2.sh 27"
-(wget $MSYS2MIRROR/msys/x86_64/http://repo.msys2.org/msys/x86_64/msys2-keyring-1~20210213-2-any.pkg.tar.zst && wget $MSYS2MIRROR/msys/x86_64/http://repo.msys2.org/msys/x86_64/msys2-keyring-1~20210213-2-any.pkg.tar.zst.sig && \
+curl -O $MSYS2MIRROR/msys/x86_64/msys2-keyring-r21.b39fb11-1-any.pkg.tar.xz || exit 1
+curl -O $MSYS2MIRROR/msys/x86_64/msys2-keyring-r21.b39fb11-1-any.pkg.tar.xz.sig || exit 1
+sudo pacman-key --verify msys2-keyring-r21.b39fb11-1-any.pkg.tar.xz.sig || exit 1
+sudo pacman --noconfirm -U msys2-keyring-r21.b39fb11-1-any.pkg.tar.xz || exit 1
+
+echo "build-msys2.sh 20"
+(rm -f pacman-msys.conf && wget https://raw.githubusercontent.com/aferrero2707/docker-buildenv-mingw/master/pacman-msys.conf && sudo cp pacman-msys.conf /etc/pacman-msys.conf) || exit 1
+echo "build-msys2.sh 24"
+(wget $MSYS2MIRROR/msys/x86_64/msys2-keyring-1~20210213-2-any.pkg.tar.zst && wget $MSYS2MIRROR/msys/x86_64/msys2-keyring-1~20210213-2-any.pkg.tar.zst.sig && \
  sudo pacman-key --verify msys2-keyring-1~20210213-2-any.pkg.tar.zst{.sig,}) || exit 1
 echo "build-msys2.sh 30"
 echo "Installing MSYS2 keyring"
