@@ -23,6 +23,7 @@ before_script:
   #- sudo docker run -it -v $(pwd):/sources -e "RT_BRANCH=${RT_BRANCH}" photoflow/docker-trusty-gtk3 bash /sources/ci/appimage.sh
   #- travis_wait 120 sleep infinity & sudo docker pull photoflow/docker-buildenv-mingw
   #- sudo docker run -it -e "TRAVIS_BUILD_DIR=/sources" -e "TRAVIS_BRANCH=${RT_BRANCH}" -e "TRAVIS_COMMIT=xxx" -v $(pwd):/sources photoflow/docker-buildenv-mingw bash -c /sources/ci/package-w64.sh
+  - echo "$DOCKER_TOKEN" | docker login --username photoflow --password-stdin
   - travis_wait 120 sleep infinity & sudo docker pull photoflow/docker-buildenv-mingw-manjaro-wine
   - echo ".travis.yml 27"
   - sudo docker run -it -e "TRAVIS_BUILD_DIR=/sources" -e "TRAVIS_BRANCH=${RT_BRANCH}" -e "TRAVIS_COMMIT=xxx" -v /etc/resolv.conf:/etc/resolv.conf.host -v $(pwd):/sources photoflow/docker-buildenv-mingw-manjaro-wine bash -c /sources/ci/package-msys2.sh
